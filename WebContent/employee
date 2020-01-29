@@ -1,0 +1,18 @@
+{"Employee":
+[
+{
+"Id":"R001",
+"Employee Name":"Prathee",
+"Designation":"Programmer",
+"Salary":50000,
+"Specialization":[{"Department":"Assembly","Device":"Phone"},{"Department":"QualityCheck","Device":"Computer"}]
+},
+{
+"Id":"R002",
+"Employee Name":"Pradee",
+"Designation":"Programmer",
+"Salary":50000,
+"Specialization":[{"Department":"Manufacture","Device":"Chipset"},{"Department":"Assembly","Device":"Phone"}]
+}
+]
+}

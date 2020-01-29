@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <title>abc Private Ltd.</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+button {
+  margin-top: 10px;
+   margin-bottom: 10px;
+    margin-left: 10px;
+	margin-right: 10px;
+  line-height: 60px;
+  font-weight: bold;
+  padding: 0 40px;
+  background: lightblue;
+  border: none;
+}
+.container{
+margin-top:100px;
+margin-left:300px;
+
+}
+    </style>
+
+<script type="text/javascript">
+function viewPassword()
+{
+var passwordInput = document.getElementById('password');
+var passStatus = document.getElementById('passStatus');
+if (passwordInput.type == 'text')
+{
+  passwordInput.type='password';
+  passStatus.className='fa fa-eye-slash';
+}
+else
+{
+  passwordInput.type='text';
+  passStatus.className='fa fa-eye';
+}
+}
+function viewData()
+{
+	
+
+	var email = document.getElementById('email').value;
+	var password = document.getElementById('password').value;
+	if(email=='admin@gmail.com' && password=='admin')
+	{	
+		displayTable();
+	}
+    
+	else
+		{
+		alert("Try again with Valid Email and Password")
+		}
+}
+function createCoursesTable(obj) {
+	var len= obj.length;
+	var col = [];
+	for (var i = 0; i <len; i++) {
+	   	for (var key in obj[i]) {
+	              if (col.indexOf(key) === -1) {
+		                    col.push(key);
+			                }
+			            }
+			        }
+		var table = document.createElement("table");
+		var tr = table.insertRow(-1);
+		for (var i = 0; i < col.length; i++) {
+		     var th = document.createElement("th");  
+			            th.innerHTML = col[i];
+			            tr.appendChild(th);
+			        }
+		for (var i = 0; i <len; i++) {
+			tr = table.insertRow(-1);
+			for (var j = 0; j < col.length; j++) {
+				var tabCell = tr.insertCell(-1);
+			    tabCell.innerHTML = obj[i][col[j]];
+}
+			var coursesContainer = document.getElementById("courses");
+			if(coursesContainer.firstChild) {
+			coursesContainer.replaceChild(table, coursesContainer.firstChild);
+			} else {
+			coursesContainer.appendChild(table);
+			}
+			}
+}
+	
+function displayTable()
+{
+	 var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+
+	 var obj=JSON.parse(this.responseText);
+	 console.log(obj);
+	 var len= obj.Employee.length;
+	  var col = [];
+	        for (var i = 0; i <len; i++) {
+	            for (var key in obj.Employee[i]) {
+	                if (col.indexOf(key) === -1) {
+	                    col.push(key);
+	                }
+	            }
+	        }
+
+	        // CREATE DYNAMIC TABLE.
+	        var table = document.createElement("table");
+
+	        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+	        var tr = table.insertRow();                   // TABLE ROW.
+
+	        for (var i = 0; i < col.length; i++) {
+	            var th = document.createElement("th");      // TABLE HEADER.
+	            th.innerHTML = col[i];
+	            tr.appendChild(th);
+	        }
+
+	        // ADD JSON DATA TO THE TABLE AS ROWS.
+	        for (var i = 0; i <len; i++) {
+
+	            tr = table.insertRow(-1);
+
+
+	            for (var j = 0; j < col.length; j++) {
+	if(col[j]==="Specialization"){
+	var tabCell = tr.insertCell(-1);
+	console.log(obj.Employee[i][col[j]]);
+	const newObj = obj.Employee[i][col[j]]
+	 var button = document.createElement("button");
+	 button.innerHTML = "View Courses";
+	 button.onclick = () => {createCoursesTable(newObj)}
+	 tabCell.appendChild(button)
+	 
+	}
+	              else{
+	var tabCell = tr.insertCell(-1);
+	                tabCell.innerHTML = obj.Employee[i][col[j]];
+	}
+	            }
+
+	        }
+
+	        
+	document.getElementById("showDiv").appendChild(table);
+	       
+	    }
+
+	           
+	     
+	    }
+	xhttp.open("GET", "https://api.myjson.com/bins/kpoka", true);
+	  xhttp.send();
+}
+</script>
+</head>
+<body>
+	
+  	<div class="container" style="	background: #a0cfec; padding-top: 20px;">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="logo">
+			<img src="C:\Users\Training\Downloads\images.png" width="50" height="50">
+</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-5">
+					  <div class="form-group">
+					    <input type="text" id="email" pattern="^[A-Za-z0-9._%+-]{4,15}@[A-Za-z0-9.-]{5,10}\.[a-zA-Z]{3}$" class="form-control" placeholder="Email Address" required>
+					    
+					  </div>
+				</div>	
+				<div class="col-sm-5">
+					 <div class="form-group input-icons" >
+					 <!-- <input type="password" id="password" class="form-control" placeholder="Password" required>-->
+					    <div class="input-group-append">
+					     <input type="password" id="password" class="form-control" placeholder="Password" required>
+					   <span class="input-group-text"> <i id="passStatus" class="fa fa-eye-slash" aria-hidden="true" onClick="viewPassword()"></i></span>
+					    </div>
+					    
+					 </div>
+				</div>
+				<div class="col-sm-2">
+					 <div class="form-group">
+					    <button type="button" class="btn btn-primary" onclick="viewData()">Submit</button>
+
+					  </div>
+				</div>
+			</div>	
+		</div>
+		<div id="courses" class="col-sm-6">
+		</div>
+	</div>
+	</div>	
+	<div id="showDiv" class="container">
+	</div>
+	<div id="courses" class="container">
+	</div>
+
+
+
+
+
+</body>
+
+</html>
